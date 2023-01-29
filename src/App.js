@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import NavBar from "./components/navBar/NavBar";
+// import PetForm from "./components/PetForm";
+// import PetList from "./components/PetList";
+import Profile from "./components/profile/Profile";
+import Game from "./components/game/Game";
+import Home from "./components/home/Home";
+import { useEffect, useState } from 'react';
+// import Axios from "axios";
+import {
+  Route,
+  Routes
+} from "react-router-dom";
+import GlobalContextProvider from "./contexts/GlobalContext";
+
+import './index.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalContextProvider>
+      <div className="container-css">
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              // <PrivateRoute>
+              <Home />
+              // </PrivateRoute>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <Profile />
+            }
+          ></Route>
+          <Route
+            path="/game/:id"
+            element={
+              <Game />
+            }
+          ></Route>
+        </Routes>
+      </div>
+    </GlobalContextProvider>
   );
 }
 
