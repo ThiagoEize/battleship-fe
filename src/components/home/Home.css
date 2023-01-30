@@ -142,10 +142,12 @@ body {
     background: #F06449;
     border: 5px solid #4c4c4c;
     box-shadow: 0 3px 2px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
 }
 
 .arcade-machine .screen-container .screen button:hover {
     background: #f06549b7;
+    cursor: pointer;
 }
 
 .arcade-machine .screen-container .screen button:active {
@@ -297,7 +299,6 @@ body {
     height: 100%;
     width: 100%;
     color: #93B6C1;
-    image-rendering: pixelated;
 }
 
 .icon-login {
@@ -308,7 +309,7 @@ body {
     width: 100%;
     color: white;
     transform: perspective(100px) rotateX(45deg);
-    image-rendering: pixelated;
+    cursor: pointer;
 }
 
 .icon-signup {
@@ -319,7 +320,7 @@ body {
     width: 100%;
     color: white;
     transform: perspective(100px) rotateX(45deg);
-    image-rendering: pixelated;
+    cursor: pointer;
 }
 
 .icon-info {
@@ -330,7 +331,7 @@ body {
     width: 100%;
     color: white;
     transform: perspective(100px) rotateX(45deg);
-    image-rendering: pixelated;
+    cursor: pointer;
 }
 
 @keyframes bounce {

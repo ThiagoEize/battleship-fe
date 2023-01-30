@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -13,6 +13,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 export default function Home() {
     const navigate = useNavigate();
+    const [zoom, setZoom] = useState(false);
+    const [buttonClicked, setButtonClicked] = useState(false);
 
     const {
         showSignUpModal,
@@ -25,32 +27,20 @@ export default function Home() {
         setUserId
     } = useGlobalContext();
 
-    // useEffect(()=>{
-
-    // })
-
-    const [zoom, setZoom] = useState(false);
-    const [buttonClicked, setButtonClicked] = useState(false);
     const handleZoom = () => {
         setZoom(true);
         setTimeout(() => {
-            // window.location.href = "/game";
-
             navigate("/game");
         }, 500);
     };
     const handleLogin = () => {
         return (
-            <div className="screen-display">
-                <LogInForm />
-            </div>
+            <LogInForm />
         );
     };
     const handleSignUp = () => {
         return (
-            <div className="screen-display">
-                <SignUpForm />
-            </div>
+            <SignUpForm />
         );
     };
     const handleInfo = () => {
@@ -80,7 +70,6 @@ export default function Home() {
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
-                                // ADD button to play music
                                 <button onClick={handleZoom}>PLAY</button>
                             )}
                         {!zoom &&
