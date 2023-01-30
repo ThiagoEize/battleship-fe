@@ -63,6 +63,7 @@ export default function Home() {
     };
     return (
         <div className="container">
+            {console.log("game")}
             <div className={`arcade-machine ${zoom ? "zoom" : ""}`}>
                 <div className="shadow"></div>
                 <div className="top">
