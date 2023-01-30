@@ -63,28 +63,28 @@ const NavBar = () => {
                             Home
                         </NavLink>
                     </li>
-                    {logedIn &&
-                        <li>
-                            <NavLink
-                                to="game/:id"
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined}
-                            >
-                                Play
-                            </NavLink>
-                        </li>
-                    }
-                    {logedIn &&
-                        <li>
-                            <NavLink
-                                to="profile"
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined}
-                            >
-                                Profile
-                            </NavLink>
-                        </li>
-                    }
+                    {/* {logedIn && */}
+                    <li>
+                        <NavLink
+                            to="game/:id"
+                            style={({ isActive }) =>
+                                isActive ? activeStyle : undefined}
+                        >
+                            Play
+                        </NavLink>
+                    </li>
+                    {/* } */}
+                    {/* {logedIn && */}
+                    <li>
+                        <NavLink
+                            to="profile"
+                            style={({ isActive }) =>
+                                isActive ? activeStyle : undefined}
+                        >
+                            Profile
+                        </NavLink>
+                    </li>
+                    {/* } */}
                     <div className="align-right">
                         {!logedIn &&
                             <li>

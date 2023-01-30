@@ -23,10 +23,8 @@ const SignUpForm = ({ onClose }) => {
         email: '',
         password: '',
         repassword: '',
-        userName: '',
-        userLastName: '',
-        phoneNumber: '',
-        userBio: '',
+        firstName: '',
+        lastName: ''
     });
 
     const handleChange = (event) => {
@@ -70,7 +68,7 @@ const SignUpForm = ({ onClose }) => {
                         type="text"
                         placeholder="First Name"
                         name="userName"
-                        value={formData.userName}
+                        value={formData.firstName}
                         onChange={handleChange}
                     />
                     <Form.Label>Last Name</Form.Label>
@@ -79,23 +77,6 @@ const SignUpForm = ({ onClose }) => {
                         placeholder="Last Name"
                         name="userLastName"
                         value={formData.userLastName}
-                        onChange={handleChange}
-                    />
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Phone Number"
-                        name="phoneNumber"
-                        value={formData.phoneNumber}
-                        onChange={handleChange}
-                    />
-                    <Form.Label>Bio</Form.Label>
-                    <Form.Control
-                        as="textarea"
-                        rows="3"
-                        placeholder="Bio"
-                        name="userBio"
-                        value={formData.userBio}
                         onChange={handleChange}
                     />
                 </Modal.Body>

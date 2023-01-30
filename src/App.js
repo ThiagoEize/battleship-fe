@@ -18,7 +18,7 @@ function App() {
   return (
     <GlobalContextProvider>
       <div className="container-css">
-        <NavBar />
+        {/* <NavBar /> */}
         <Routes>
           <Route
             path="/"
@@ -35,7 +35,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/game/:id"
+            path="/game"
             element={
               <Game />
             }
