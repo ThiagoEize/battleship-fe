@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faUnlockAlt, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 
@@ -77,10 +77,10 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                     </span>
                     <span className="icon">
-                        <FontAwesomeIcon icon={faLock} />
+                        <FontAwesomeIcon icon={faUnlockAlt} />
                     </span>
                 </div>
-                <button className="form-login" onClick={handleLogIn}>
+                <button className="form-btn-login" onClick={handleLogIn}>
                     Log In
                 </button>
                 {errorsFromServer &&

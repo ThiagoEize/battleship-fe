@@ -1,11 +1,22 @@
 import { useState } from "react";
-// import { Button } from "react-bootstrap"
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faLock, faEye, faEyeSlash, faUnlockAlt, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+
+import './Form.css';
 
 const SignUpForm = ({ onClose }) => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const toggleConfirmPasswordVisibility = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
+
     const handleSignUp = async (e) => {
         try {
             const res = await axios.post('http://localhost:8080/users/signup', formData)
@@ -34,62 +45,83 @@ const SignUpForm = ({ onClose }) => {
 
     return (
         <div className="note-form-container">
-            <form>
-                <Modal.Header>
-                    <h3>Test</h3>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
+            <form className="signup-form">
+                <div className="input-icon">
+                    <input className="form-email"
                         type="email"
-                        placeholder="Email"
+                        title="Email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                    />
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
+                    >
+                    </input>
+                    <span className="icon">
+                        <FontAwesomeIcon icon={faEnvelope} />
+                    </span>
+                </div>
+                <div className="input-icon">
+                    <input className="form-password"
+                        type={showPassword ? 'text' : 'password'}
+                        title="Password"
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
-                    />
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Confirm Password"
+                    >
+                    </input>
+                    <span className='eye-icon' onClick={togglePasswordVisibility}>
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                    </span>
+                    <span className="icon">
+                        <FontAwesomeIcon icon={faUnlockAlt} />
+                    </span>
+                </div>
+                <div className="input-icon">
+                    <input className="form-password"
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        title="Password"
                         name="repassword"
                         value={formData.repassword}
                         onChange={handleChange}
-                    />
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control
+                    >
+                    </input>
+                    <span className='eye-icon' onClick={toggleConfirmPasswordVisibility}>
+                        <FontAwesomeIcon icon={showConfirmPassword ? faEyeSlash : faEye} />
+                    </span>
+                    <span className="icon">
+                        <FontAwesomeIcon icon={faLock} />
+                    </span>
+                </div>
+                <div className="input-icon">
+                    <input className="form-firstName"
                         type="text"
-                        placeholder="First Name"
-                        name="userName"
+                        title="First Name"
+                        name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                    />
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control
+                    >
+                    </input>
+                    <span className="icon">
+                        <FontAwesomeIcon icon={faUser} />
+                    </span>
+                </div>
+                <div className="input-icon">
+                    <input className="form-lastName"
                         type="text"
-                        placeholder="Last Name"
-                        name="userLastName"
-                        value={formData.userLastName}
+                        title="Last Name"
+                        name="lastName"
+                        value={formData.lastName}
                         onChange={handleChange}
-                    />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={onClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={(e) => handleSignUp(formData)}>
-                        Sign In
-                    </Button>
-                </Modal.Footer>
+                    >
+                    </input>
+                    <span className="icon">
+                        <FontAwesomeIcon icon={faUsers} />
+                    </span>
+                </div>
+                <button className="form-btn-signup" onClick={(e) => handleSignUp(formData)}>
+                    Sign In
+                </button>
             </form >
-        </div>
+        </div >
 
     );
 };
