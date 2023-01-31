@@ -79,7 +79,7 @@ const Game = () => {
   };
 
   return (
-    <>
+    <div className="game-container">
       {gamePhase === "wait-player" && <h1>Waiting for another player</h1>}
       {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
@@ -89,7 +89,7 @@ const Game = () => {
       {gamePhase === "battle" && (
         <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
       )}
-      <div className="flex">
+      <div className="game">
         <div>
           <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
@@ -113,7 +113,7 @@ const Game = () => {
           setShipsToDeploy={setShipsToDeploy}
         />
       )}
-    </>
+    </div>
   );
 };
 

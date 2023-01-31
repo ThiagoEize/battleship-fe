@@ -39,7 +39,6 @@ const Game = () => {
   };
 
   const shoot = (coords) => {
-    console.log("isWin", isWin);
     if (enemyField.getState(coords) !== "unknown") return;
     if (isWin !== undefined) return;
     setAiField(aiField.shoot(coords));
@@ -58,16 +57,22 @@ const Game = () => {
   };
 
   return (
-    <>
+    <div className="game-container">
       {isWin !== undefined && <h1>{`${isWin ? "You won" : "You lost"}`}</h1>}
-      <div className="flex">
+      {isWin === undefined && (
+        <h1>{`${
+          shipsToDeploy.length > 0 ? "Deploy your ships" : "Destroy your enemy"
+        } `}</h1>
+      )}
+
+      <div className="game">
         <div>
-          <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
+          <h2>{`My field. Deployed: ${field.deployedShips}`}</h2>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (
           <div>
-            <h3>{`Enemy field. Deployed: ${aiField.deployedShips}`}</h3>
+            <h2>{`Enemy field. Deployed: ${aiField.deployedShips}`}</h2>
             <Field field={enemyField.field} handleCellClick={shoot} />
           </div>
         )}
@@ -79,7 +84,7 @@ const Game = () => {
           setShipsToDeploy={setShipsToDeploy}
         />
       )}
-    </>
+    </div>
   );
 };
 
