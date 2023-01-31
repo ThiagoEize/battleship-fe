@@ -7,14 +7,14 @@ import { useGlobalContext } from "../../contexts/GlobalContext";
 
 import './Form.css';
 
-const LogInForm = ({ onClose, setToken, setUserId }) => {
+const LogInForm = () => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const { errorsFromServer, setErrorsFromServer } = useGlobalContext();
+    const { errorsFromServer, setErrorsFromServer, setUserId, setToken } = useGlobalContext();
 
     const handleLogIn = async (e) => {
         e.preventDefault();

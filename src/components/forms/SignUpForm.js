@@ -5,7 +5,7 @@ import { faEnvelope, faLock, faEye, faEyeSlash, faUnlockAlt, faUser, faUsers } f
 
 import './Form.css';
 
-const SignUpForm = ({ onClose }) => {
+const SignUpForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -33,7 +33,6 @@ const SignUpForm = ({ onClose }) => {
     };
 
     const [formData, setFormData] = useState({
-        permissionId: null,
         email: '',
         password: '',
         repassword: '',
