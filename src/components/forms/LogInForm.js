@@ -8,24 +8,21 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 
-const LogInForm = ({ onClose, setToken, setUserId }) => {
-    const navigate = useNavigate();
-    const { errorsFromServer, setErrorsFromServer } = useGlobalContext();
+const LogInForm = ({ handleCloseForm }) => {
+    // const navigate = useNavigate();
+    const { errorsFromServer, setErrorsFromServer, setToken, setUserId } = useGlobalContext();
     const handleLogIn = async (e) => {
         try {
             e.preventDefault();
             const res = await axios.post('http://localhost:8080/users/login', formData)
             if (res.data.token) {
-                console.log(setUserId);
                 localStorage.setItem('token', res.data.token);
                 setToken(res.data.token);
                 localStorage.setItem('userId', res.data.id);
                 setUserId(res.data.id);
-                // navigate("/");
             }
             if (res.data.success) {
-                // navigate("/");
-                onClose();
+                handleCloseForm()
             }
         } catch (err) {
             console.log('This is the error message', err);
@@ -76,7 +73,7 @@ const LogInForm = ({ onClose, setToken, setUserId }) => {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={onClose}>
+                    <Button variant="secondary" onClick={() => handleCloseForm()}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleLogIn}>

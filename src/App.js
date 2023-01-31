@@ -18,7 +18,7 @@ function App() {
   return (
     <GlobalContextProvider>
       <div className="container-css">
-        {/* <NavBar /> */}
+        <NavBar />
         <Routes>
           <Route
             path="/"

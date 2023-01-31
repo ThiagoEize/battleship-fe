@@ -4,11 +4,18 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { useGlobalContext } from "../../contexts/GlobalContext";
 
-const SignUpForm = ({ handleCloseForm }) => {
-    const handleSignUp = async (e) => {
+const ProfileForm = ({ handleCloseForm }) => {
+    const {
+        token,
+        userId,
+        user
+    } = useGlobalContext();
+
+    const handleChangeProfile = async (e) => {
         try {
-            const res = await axios.post('http://localhost:8080/users/signup', formData)
+            const res = await axios.put(`http://localhost:8080/users/${userId}`, formData, { headers: { Authorization: `Bearer ${token}` } })
             if (res.data.success) {
                 console.log(res)
             }
@@ -19,23 +26,28 @@ const SignUpForm = ({ handleCloseForm }) => {
     };
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        repassword: '',
-        firstName: '',
-        lastName: ''
+        email: user.email || '',
+        password: user.password || '',
+        firstName: user.firstName || '',
+        lastName: user.lastName || ''
     });
+
+    const [repassword, setRepassword] = useState(user.password);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    const handleChangeRepassword = (event) => {
+        setRepassword(event.target.value)
+    }
+
     return (
         <div className="note-form-container">
             <form>
                 <Modal.Header>
-                    <h3>Signup</h3>
+                    <h3>Profile</h3>
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Label>Email</Form.Label>
@@ -59,8 +71,8 @@ const SignUpForm = ({ handleCloseForm }) => {
                         type="password"
                         placeholder="Confirm Password"
                         name="repassword"
-                        value={formData.repassword}
-                        onChange={handleChange}
+                        value={repassword}
+                        onChange={handleChangeRepassword}
                     />
                     <Form.Label>First Name</Form.Label>
                     <Form.Control
@@ -83,8 +95,8 @@ const SignUpForm = ({ handleCloseForm }) => {
                     <Button variant="secondary" onClick={() => handleCloseForm()}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={(e) => handleSignUp(formData)}>
-                        Sign In
+                    <Button variant="primary" onClick={(e) => handleChangeProfile(formData)}>
+                        Change Profile
                     </Button>
                 </Modal.Footer>
             </form >
@@ -93,4 +105,4 @@ const SignUpForm = ({ handleCloseForm }) => {
     );
 };
 
-export default SignUpForm;
+export default ProfileForm;

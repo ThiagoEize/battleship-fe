@@ -9,20 +9,15 @@ import {
 import "./Home.css";
 import SignUpForm from "../forms/SignUpForm";
 import LogInForm from "../forms/LogInForm";
+import ProfileForm from "../forms/ProfileForm";
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 export default function Home() {
     const navigate = useNavigate();
 
     const {
-        showSignUpModal,
-        showLogInModal,
-        setShowSignUpModal,
-        setShowLogInModal,
         token,
-        setToken,
-        userId,
-        setUserId
+        userId
     } = useGlobalContext();
 
     // useEffect(()=>{
@@ -31,6 +26,11 @@ export default function Home() {
 
     const [zoom, setZoom] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
+
+    const handleCloseForm = () => {
+        setButtonClicked(false)
+    }
+
     const handleZoom = () => {
         setZoom(true);
         setTimeout(() => {
@@ -42,25 +42,34 @@ export default function Home() {
     const handleLogin = () => {
         return (
             <div className="screen-display">
-                <LogInForm />
+                <LogInForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
             </div>
         );
     };
     const handleSignUp = () => {
         return (
             <div className="screen-display">
-                <SignUpForm />
+                <SignUpForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
             </div>
         );
     };
-    const handleInfo = () => {
+    // const handleInfo = () => {
+    //     return (
+    //         <div className="screen-display">
+    //             <h1>INFO</h1>
+    //             {/* component info */}
+    //         </div>
+    //     );
+    // };
+
+    const handleProfile = () => {
         return (
             <div className="screen-display">
-                <h1>INFO</h1>
-                {/* component info */}
+                <ProfileForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
             </div>
         );
     };
+
     return (
         <div className="container">
             <div className={`arcade-machine ${zoom ? "zoom" : ""}`}>
@@ -74,7 +83,8 @@ export default function Home() {
                         <div className="screen-display"></div>
                         {buttonClicked === "login" && handleLogin()}
                         {buttonClicked === "signup" && handleSignUp()}
-                        {buttonClicked === "info" && handleInfo()}
+                        {/* {buttonClicked === "info" && handleInfo()} */}
+                        {buttonClicked === "info" && handleProfile()}
                         {!zoom &&
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
@@ -110,7 +120,7 @@ export default function Home() {
                         <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="icon-login"
-                            title="Login"
+                            title="Signup"
                         />
                     </button>
                     <button
@@ -122,7 +132,7 @@ export default function Home() {
                         <FontAwesomeIcon
                             icon={faUser}
                             className="icon-signup"
-                            title="Sign Up"
+                            title="Login"
                         />
                     </button>
                     <button
