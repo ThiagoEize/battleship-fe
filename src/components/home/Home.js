@@ -8,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SignUpForm from "../forms/SignUpForm";
 import LogInForm from "../forms/LogInForm";
-import ProfileForm from "../forms/ProfileForm";
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 import AudioPlayer from "react-audio-player";
@@ -20,16 +19,15 @@ export default function Home() {
     const [zoom, setZoom] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
     const {
+        showSignUpModal,
+        showLogInModal,
+        setShowSignUpModal,
+        setShowLogInModal,
         token,
+        setToken,
         userId,
-        setUserId,
-        setToken
+        setUserId
     } = useGlobalContext();
-
-
-    const handleCloseForm = () => {
-        setButtonClicked(false)
-    }
 
     const handleZoom = () => {
         setZoom(true);
@@ -41,41 +39,26 @@ export default function Home() {
         // );
     };
     const handleLogin = () => {
-        if (!token) {
-            return (
-                <>
-                    <LogInForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
-                    <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/09/29/audio_a4b3f2fe44.mp3?filename=select-sound-121244.mp3" autoPlay />
-                </>
-            );
-        } else {
-            localStorage.removeItem('token');
-            localStorage.removeItem('userId');
-            setToken('');
-            setUserId('');
-        }
+        return (
+            <>
+                <LogInForm />
+                <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/09/29/audio_a4b3f2fe44.mp3?filename=select-sound-121244.mp3" autoPlay />
+            </>
+        );
     };
     const handleSignUp = () => {
         return (
             <>
-                <SignUpForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
+                <SignUpForm />
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_23b7958390.mp3?filename=menu-click-89198.mp3" autoPlay />
             </>
         );
     };
-    // const handleInfo = () => {
-    //     return (
-    //         <div className="screen-display">
-    //             <h1>INFO</h1>
-    //             {/* component info */}
-    //         </div>
-    //     );
-    // };
-
-    const handleProfile = () => {
+    const handleInfo = () => {
         return (
             <div className="screen-display">
-                <ProfileForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
+                <h1>INFO</h1>
+                {/* component info */}
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_a29a673ef4.mp3?filename=decidemp3-14575.mp3" autoPlay />
             </div>
         );
@@ -94,8 +77,7 @@ export default function Home() {
                         <div className="screen-display"></div>
                         {buttonClicked === "login" && handleLogin()}
                         {buttonClicked === "signup" && handleSignUp()}
-                        {/* {buttonClicked === "info" && handleInfo()} */}
-                        {buttonClicked === "info" && handleProfile()}
+                        {buttonClicked === "info" && handleInfo()}
                         {!zoom &&
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
@@ -130,7 +112,7 @@ export default function Home() {
                         <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="icon-login"
-                            title="Signup"
+                            title="Login"
                         />
                     </button>
                     <button
@@ -142,7 +124,7 @@ export default function Home() {
                         <FontAwesomeIcon
                             icon={faUser}
                             className="icon-signup"
-                            title="Login"
+                            title="Sign Up"
                         />
                     </button>
                     <button
