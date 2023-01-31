@@ -12,6 +12,7 @@ import ProfileForm from "../forms/ProfileForm";
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 import AudioPlayer from "react-audio-player";
+import Game from "../game/Game";
 
 import "./Home.css";
 
@@ -32,6 +33,8 @@ export default function Home() {
 
     const handleZoom = () => {
         setZoom(true);
+
+        setButtonClicked("play")
         // setTimeout(() => {
         //     navigate("/game");
         // }, 500);
@@ -50,7 +53,7 @@ export default function Home() {
     const handleSignUp = () => {
         return (
             <>
-                <SignUpForm setButtonClicked={setButtonClicked}/>
+                <SignUpForm setButtonClicked={setButtonClicked} />
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_23b7958390.mp3?filename=menu-click-89198.mp3" autoPlay />
             </>
         );
@@ -64,6 +67,14 @@ export default function Home() {
     //         </div>
     //     );
     // };
+
+    const handlePlay = () => {
+        return (
+            <div className="screen-display">
+                <Game />
+            </div>
+        );
+    };
 
     const handleInfo = () => {
         return (
@@ -87,6 +98,8 @@ export default function Home() {
                         {buttonClicked === "login" && handleLogin()}
                         {buttonClicked === "signup" && handleSignUp()}
                         {buttonClicked === "info" && handleInfo()}
+                        {buttonClicked === "play" && handlePlay()}
+
                         {!zoom &&
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
