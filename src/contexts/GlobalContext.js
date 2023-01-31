@@ -9,13 +9,14 @@ export function useGlobalContext() {
 
 export default function GlobalContextProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem('token') || '')
-    const [userId, setUserId] = useState(parseInt(localStorage.getItem('userId')) || '')
+    const [userId, setUserId] = useState(localStorage.getItem('userId') || '')
 
     const [user, setUser] = useState({});
 
     const getUser = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/user/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+            const response = await axios.get(`http://localhost:3001/users/${userId}`, { headers: { Authorization: `Bearer ${token}` } });
+            console.log('this is the response',response);
             if (response.data.data > 0) {
                 setUser(response.data.data)
             } else {

@@ -2,10 +2,11 @@ import { useState } from "react";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash, faUnlockAlt, faUser, faUsers } from '@fortawesome/free-solid-svg-icons';
+// import Dropzone from "react-dropzone";
 
 import './Form.css';
 
-const SignUpForm = () => {
+const SignUpForm = ({setButtonClicked}) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -19,14 +20,17 @@ const SignUpForm = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+            console.log('formData',formData);
         try {
-            const res = await axios.post('http://localhost:8080/users/signup', formData)
-            if (res.data.success) {
+            
+            const res = await axios.post('http://localhost:3001/auth/register', formData)
+            if (res) {
                 console.log(res)
             }
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 1000);
+            setButtonClicked("login")
         } catch (err) {
             console.log(err);
         }
@@ -119,8 +123,8 @@ const SignUpForm = () => {
                         <FontAwesomeIcon icon={faUsers} />
                     </span>
                 </div>
-                <button className="form-btn-signup" onClick={(e) => handleSignUp(formData)}>
-                    Sign In
+                <button className="form-btn-signup" onClick={handleSignUp}>
+                    Register
                 </button>
             </form >
         </div >

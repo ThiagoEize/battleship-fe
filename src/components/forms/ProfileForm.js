@@ -15,7 +15,7 @@ const ProfileForm = ({ handleCloseForm }) => {
 
     const handleChangeProfile = async (e) => {
         try {
-            const res = await axios.put(`http://localhost:8080/users/${userId}`, formData, { headers: { Authorization: `Bearer ${token}` } })
+            const res = await axios.put(`http://localhost:3001/users/${userId}`, formData, { headers: { Authorization: `Bearer ${token}` } })
             if (res.data.success) {
                 console.log(res)
             }

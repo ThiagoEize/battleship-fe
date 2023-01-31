@@ -16,7 +16,7 @@ import AudioPlayer from "react-audio-player";
 import "./Home.css";
 
 export default function Home() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [zoom, setZoom] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
     const {
@@ -32,9 +32,9 @@ export default function Home() {
 
     const handleZoom = () => {
         setZoom(true);
-        setTimeout(() => {
-            navigate("/game");
-        }, 500);
+        // setTimeout(() => {
+        //     navigate("/game");
+        // }, 500);
         // return (
         //     <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
         // );
@@ -50,7 +50,7 @@ export default function Home() {
     const handleSignUp = () => {
         return (
             <>
-                <SignUpForm />
+                <SignUpForm setButtonClicked={setButtonClicked}/>
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_23b7958390.mp3?filename=menu-click-89198.mp3" autoPlay />
             </>
         );

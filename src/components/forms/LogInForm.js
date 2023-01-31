@@ -7,7 +7,7 @@ import { useGlobalContext } from "../../contexts/GlobalContext";
 
 import './Form.css';
 
-const LogInForm = () => {
+const LogInForm = ({setButtonClicked}) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -19,16 +19,14 @@ const LogInForm = () => {
     const handleLogIn = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:8080/users/login', formData)
+            const res = await axios.post('http://localhost:3001/auth/login', formData)
             if (res.data.token) {
-                console.log(setUserId);
+                console.log(res.data);
                 localStorage.setItem('token', res.data.token);
                 setToken(res.data.token);
-                localStorage.setItem('userId', res.data.id);
-                setUserId(res.data.id);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500);
+                localStorage.setItem('userId', res.data.user._id);
+                setUserId(res.data.user._id);
+                setButtonClicked(false)
             }
             if (res.data.success) {
 
