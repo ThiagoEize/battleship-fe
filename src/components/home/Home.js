@@ -17,7 +17,9 @@ export default function Home() {
 
     const {
         token,
-        userId
+        userId,
+        setUserId,
+        setToken
     } = useGlobalContext();
 
     // useEffect(()=>{
@@ -40,11 +42,18 @@ export default function Home() {
         }, 500);
     };
     const handleLogin = () => {
-        return (
-            <div className="screen-display">
-                <LogInForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
-            </div>
-        );
+        if (!token) {
+            return (
+                <div className="screen-display">
+                    <LogInForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
+                </div>
+            );
+        } else {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userId');
+            setToken('');
+            setUserId('');
+        }
     };
     const handleSignUp = () => {
         return (
