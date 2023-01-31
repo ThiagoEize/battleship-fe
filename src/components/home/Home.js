@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SignUpForm from "../forms/SignUpForm";
 import LogInForm from "../forms/LogInForm";
+import ProfileForm from "../forms/ProfileForm";
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
 import AudioPlayer from "react-audio-player";
@@ -56,11 +57,10 @@ export default function Home() {
     };
     const handleInfo = () => {
         return (
-            <div className="screen-display">
-                <h1>INFO</h1>
-                {/* component info */}
+            <>
+                <ProfileForm />
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_a29a673ef4.mp3?filename=decidemp3-14575.mp3" autoPlay />
-            </div>
+            </>
         );
     };
 
