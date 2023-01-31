@@ -17,7 +17,7 @@ import Game from "../game/Game";
 import "./Home.css";
 
 export default function Home() {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [zoom, setZoom] = useState(false);
     const [buttonClicked, setButtonClicked] = useState(false);
     const {
@@ -33,14 +33,13 @@ export default function Home() {
 
     const handleZoom = () => {
         setZoom(true);
-
         setButtonClicked("play")
-        // setTimeout(() => {
-        //     navigate("/game");
-        // }, 500);
-        // return (
-        //     <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
-        // );
+        setTimeout(() => {
+            navigate("/game");
+        }, 500);
+        return (
+            <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
+        );
     };
     const handleLogin = () => {
         return (
@@ -58,29 +57,13 @@ export default function Home() {
             </>
         );
     };
-    // const handleInfo = () => {
-    //     return (
-    //         <div className="screen-display">
-    //             <h1>INFO</h1>
-
-    //             <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_a29a673ef4.mp3?filename=decidemp3-14575.mp3" autoPlay />
-    //         </div>
-    //     );
-    // };
-
-    const handlePlay = () => {
-        return (
-            <div className="screen-display">
-                <Game />
-            </div>
-        );
-    };
 
     const handleInfo = () => {
         return (
-            <div className="screen-display">
+            <>
                 <ProfileForm />
-            </div>
+                <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_a29a673ef4.mp3?filename=decidemp3-14575.mp3" autoPlay />
+            </>
         );
     };
 
@@ -98,8 +81,6 @@ export default function Home() {
                         {buttonClicked === "login" && handleLogin()}
                         {buttonClicked === "signup" && handleSignUp()}
                         {buttonClicked === "info" && handleInfo()}
-                        {buttonClicked === "play" && handlePlay()}
-
                         {!zoom &&
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
