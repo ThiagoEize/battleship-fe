@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faUser,
@@ -6,15 +6,19 @@ import {
     faSignInAlt,
     faShip,
 } from "@fortawesome/free-solid-svg-icons";
-import "./Home.css";
 import SignUpForm from "../forms/SignUpForm";
 import LogInForm from "../forms/LogInForm";
 import ProfileForm from "../forms/ProfileForm";
 import { useNavigate, Link } from 'react-router-dom';
 import { useGlobalContext } from "../../contexts/GlobalContext";
+import AudioPlayer from "react-audio-player";
+
+import "./Home.css";
+
 export default function Home() {
     const navigate = useNavigate();
-
+    const [zoom, setZoom] = useState(false);
+    const [buttonClicked, setButtonClicked] = useState(false);
     const {
         token,
         userId,
@@ -22,12 +26,6 @@ export default function Home() {
         setToken
     } = useGlobalContext();
 
-    // useEffect(()=>{
-
-    // })
-
-    const [zoom, setZoom] = useState(false);
-    const [buttonClicked, setButtonClicked] = useState(false);
 
     const handleCloseForm = () => {
         setButtonClicked(false)
@@ -36,17 +34,19 @@ export default function Home() {
     const handleZoom = () => {
         setZoom(true);
         setTimeout(() => {
-            // window.location.href = "/game";
-
             navigate("/game");
         }, 500);
+        // return (
+        //     <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
+        // );
     };
     const handleLogin = () => {
         if (!token) {
             return (
-                <div className="screen-display">
+                <>
                     <LogInForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
-                </div>
+                    <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/09/29/audio_a4b3f2fe44.mp3?filename=select-sound-121244.mp3" autoPlay />
+                </>
             );
         } else {
             localStorage.removeItem('token');
@@ -57,9 +57,10 @@ export default function Home() {
     };
     const handleSignUp = () => {
         return (
-            <div className="screen-display">
+            <>
                 <SignUpForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
-            </div>
+                <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_23b7958390.mp3?filename=menu-click-89198.mp3" autoPlay />
+            </>
         );
     };
     // const handleInfo = () => {
@@ -75,6 +76,7 @@ export default function Home() {
         return (
             <div className="screen-display">
                 <ProfileForm buttonClicked={buttonClicked} handleCloseForm={handleCloseForm} />
+                <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_a29a673ef4.mp3?filename=decidemp3-14575.mp3" autoPlay />
             </div>
         );
     };
@@ -98,7 +100,6 @@ export default function Home() {
                             buttonClicked !== "login" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
-                                // ADD button to play music
                                 <button onClick={handleZoom}>PLAY</button>
                             )}
                         {!zoom &&
