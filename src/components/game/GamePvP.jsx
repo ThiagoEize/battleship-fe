@@ -15,7 +15,8 @@ const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
 
 const socket = io(
-  `${process.env.REACT_APP_WS_URL}:${process.env.REACT_APP_WS_PORT}`
+  "wss://battleship-team3.herokuapp.com"
+  // `${process.env.REACT_APP_WS_URL}:${process.env.REACT_APP_WS_PORT}`
 );
 
 const Game = () => {
