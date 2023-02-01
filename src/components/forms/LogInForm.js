@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import Alert from 'react-bootstrap/Alert';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faUnlockAlt, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
+import Alert from "react-bootstrap/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faEnvelope,
+    faUnlockAlt,
+    faEye,
+    faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import { useGlobalContext } from "../../contexts/GlobalContext";
 
-import './Form.css';
+import "./Form.css";
 
 const LogInForm = ({ setButtonClicked }) => {
     const [showPassword, setShowPassword] = useState(false);
@@ -23,20 +28,22 @@ const LogInForm = ({ setButtonClicked }) => {
     const handleLogIn = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:3001/auth/login', formData)
+            const res = await axios.post(
+                `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_REST_PORT}/auth/login`,
+                formData
+            );
             if (res.data.token) {
                 console.log(res.data);
-                localStorage.setItem('token', res.data.token);
+                localStorage.setItem("token", res.data.token);
                 setToken(res.data.token);
-                localStorage.setItem('userId', res.data.user._id);
+                localStorage.setItem("userId", res.data.user._id);
                 setUserId(res.data.user._id);
-                setButtonClicked(false)
+                setButtonClicked(false);
             }
             if (res.data.success) {
-
             }
         } catch (err) {
-            console.log('This is the error message', err);
+            console.log("This is the error message", err);
             if (err.response.data) {
                 setErrorsFromServer('Username or password incorrect')
             }
@@ -44,8 +51,8 @@ const LogInForm = ({ setButtonClicked }) => {
     };
 
     const [formData, setFormData] = useState({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
     });
 
     const handleChange = (event) => {

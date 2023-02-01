@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { cloneDeep } from "lodash";
 import GameField from "./lib/gameField";
 import Field from "./Field";
@@ -6,13 +6,22 @@ import "./style/game.css";
 import SelectShip from "./SelectShip";
 import initShips from "./lib/initShips";
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import sendScore from "./lib/sendScore";
+import AudioPlayer from "react-audio-player";
 
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
 
-const socket = io("http://localhost:3002");
+const socket = io(
+  `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_WS_PORT}`
+);
 
 const Game = () => {
+  const { userId } = useContext(GlobalContext);
+
+  const navigate = useNavigate();
   const [gamePhase, setGamePhase] = useState("wait-player");
   const [isMyMove, setIsMyMove] = useState();
   const [isWin, setIsWin] = useState();
@@ -48,6 +57,7 @@ const Game = () => {
     socket.on("game-over", (isWin) => {
       setGamePhase("game-over");
       setIsWin(isWin);
+      sendScore(field.deployedShips - enemyField.deployedShips, userId);
     });
   }, []);
 
@@ -65,10 +75,12 @@ const Game = () => {
     setField((prev) => {
       const newGameField = cloneDeep(prev);
       const isAdded = newGameField.addShip(selectedShip, coords);
-      if (isAdded)
+      if (isAdded) {
         setShipsToDeploy((prev) =>
           prev.filter((x) => x.id !== selectedShip.id)
         );
+        setSelectedShip(null);
+      }
       return newGameField;
     });
   };
@@ -79,28 +91,39 @@ const Game = () => {
   };
 
   return (
-    <>
-      {gamePhase === "wait-player" && <h1>Waiting for another player</h1>}
-      {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
+    <div className="game-container">
+      {
+        <AudioPlayer
+          src="https://cdn.pixabay.com/download/audio/2021/11/24/audio_838dbb98e5.mp3?filename=inspiring-epic-motivation-cinematic-trailer-11218.mp3"
+          autoPlay
+          loop
+        />
+      }
+      {gamePhase === "wait-player" && <h1 className="centeredText">Waiting for another player...</h1>}
+      {gamePhase === "deployment" && <h1 >Deploy your ships</h1>}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
-        <h1>{`${isWin ? "You won" : "You lost"}`}</h1>
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${isWin ? "You won" : "You lost"
+          }. Exit to menu`}</h1>
       )}
       {gamePhase === "battle" && (
         <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
       )}
-      <div className="flex">
-        <div>
-          <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
+      <div className="game">
+        <div className="field-container">
+          <h3>
+            <span>`My field. Deployed: </span>
+            <span class="number">{field.deployedShips} </span>
+          </h3>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (
-          <div>
+          <div className="field-container">
             <h3>{`Enemy field. Deployed: ${enemyField.deployedShips}`}</h3>
             <Field
               field={enemyField.field}
               handleCellClick={
-                isMyMove && gamePhase === "battle" ? shoot : () => {}
+                isMyMove && gamePhase === "battle" ? shoot : () => { }
               }
             />
           </div>
@@ -113,7 +136,7 @@ const Game = () => {
           setShipsToDeploy={setShipsToDeploy}
         />
       )}
-    </>
+    </div>
   );
 };
 
