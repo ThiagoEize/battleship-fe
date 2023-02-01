@@ -28,6 +28,7 @@ function App() {
           ></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/game" element={<Game />}></Route>
+          <Route path="/gamePvP" element={<GamePvP />}></Route>
         </Routes>
       </div>
     </GlobalContextProvider>
