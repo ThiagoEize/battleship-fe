@@ -36,6 +36,12 @@
     transparent 3px
   );
 }
+
+.cell-w-ship > img {
+  filter: invert(18%) sepia(99%) saturate(7210%) hue-rotate(359deg)
+    brightness(111%) contrast(109%);
+}
+
 .cell-d-ship {
   background: repeating-linear-gradient(
     30deg,
@@ -45,7 +51,7 @@
     transparent 3px
   );
 }
-
-/* .cell-select {
-  border: solid 2px purple;
-} */
+.cell-d-ship > img {
+  filter: invert(24%) sepia(63%) saturate(2716%) hue-rotate(95deg)
+    brightness(103%) contrast(108%);
+}

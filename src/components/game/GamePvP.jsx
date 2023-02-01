@@ -6,6 +6,7 @@ import "./style/game.css";
 import SelectShip from "./SelectShip";
 import initShips from "./lib/initShips";
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
@@ -13,6 +14,7 @@ initEnemyField.deployedShips = initShips.length;
 const socket = io("http://localhost:3002");
 
 const Game = () => {
+  const navigate = useNavigate();
   const [gamePhase, setGamePhase] = useState("wait-player");
   const [isMyMove, setIsMyMove] = useState();
   const [isWin, setIsWin] = useState();
@@ -65,10 +67,12 @@ const Game = () => {
     setField((prev) => {
       const newGameField = cloneDeep(prev);
       const isAdded = newGameField.addShip(selectedShip, coords);
-      if (isAdded)
+      if (isAdded) {
         setShipsToDeploy((prev) =>
           prev.filter((x) => x.id !== selectedShip.id)
         );
+        setSelectedShip(null);
+      }
       return newGameField;
     });
   };
@@ -84,18 +88,20 @@ const Game = () => {
       {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
-        <h1>{`${isWin ? "You won" : "You lost"}`}</h1>
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${
+          isWin ? "You won" : "You lost"
+        }. Exit to menu`}</h1>
       )}
       {gamePhase === "battle" && (
         <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
       )}
       <div className="game">
-        <div>
+        <div className="field-container">
           <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (
-          <div>
+          <div className="field-container">
             <h3>{`Enemy field. Deployed: ${enemyField.deployedShips}`}</h3>
             <Field
               field={enemyField.field}

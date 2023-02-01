@@ -6,6 +6,7 @@ import "./style/game.css";
 import SelectShip from "./SelectShip";
 import initShips from "./lib/initShips";
 import AiGameField from "./lib/aiGameField";
+import { useNavigate } from "react-router-dom";
 
 const Game = () => {
   const [aiField, setAiField] = useState(new AiGameField(10, 10, initShips));
@@ -16,6 +17,8 @@ const Game = () => {
   );
   const [selectedShip, setSelectedShip] = useState();
   const [shipsToDeploy, setShipsToDeploy] = useState(initShips);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (shipsToDeploy.length > 0) return;
@@ -58,7 +61,11 @@ const Game = () => {
 
   return (
     <div className="game-container">
-      {isWin !== undefined && <h1>{`${isWin ? "You won" : "You lost"}`}</h1>}
+      {isWin !== undefined && (
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${
+          isWin ? "You won" : "You lost"
+        }. Exit to menu`}</h1>
+      )}
       {isWin === undefined && (
         <h1>{`${
           shipsToDeploy.length > 0 ? "Deploy your ships" : "Destroy your enemy"
@@ -66,12 +73,12 @@ const Game = () => {
       )}
 
       <div className="game">
-        <div>
+        <div className="field-container">
           <h2>{`My field. Deployed: ${field.deployedShips}`}</h2>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (
-          <div>
+          <div className="field-container">
             <h2>{`Enemy field. Deployed: ${aiField.deployedShips}`}</h2>
             <Field field={enemyField.field} handleCellClick={shoot} />
           </div>
