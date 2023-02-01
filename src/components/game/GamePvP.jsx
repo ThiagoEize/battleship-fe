@@ -9,6 +9,8 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import sendScore from "./lib/sendScore";
+import PreviewDeploy from "./previewDeploy";
+import { GameContextProvider } from "../../contexts/GameContext";
 
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
@@ -64,6 +66,7 @@ const Game = () => {
   const [enemyField, setEnemyField] = useState(initEnemyField);
   const [selectedShip, setSelectedShip] = useState();
   const [shipsToDeploy, setShipsToDeploy] = useState(initShips);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (shipsToDeploy.length === 0) socket.emit("deployed");
@@ -80,6 +83,7 @@ const Game = () => {
         );
         setSelectedShip(null);
       }
+      setMessage("ship out of bounds");
       return newGameField;
     });
   };
@@ -90,43 +94,50 @@ const Game = () => {
   };
 
   return (
-    <div className="game-container">
-      {gamePhase === "wait-player" && <h1>Waiting for another player</h1>}
-      {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
-      {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
-      {gamePhase === "game-over" && (
-        <h1 className="pointer" onClick={() => navigate("/")}>{`${
-          isWin ? "You won" : "You lost"
-        }. Exit to menu`}</h1>
-      )}
-      {gamePhase === "battle" && (
-        <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
-      )}
-      <div className="game">
-        <div className="field-container">
-          <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
-          <Field field={field.field} handleCellClick={deploySelectedShip} />
-        </div>
-        {shipsToDeploy.length === 0 && (
+    <GameContextProvider>
+      <div className="game-container">
+        {gamePhase === "wait-player" && <h1>Waiting for another player</h1>}
+        {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
+        {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
+        {gamePhase === "game-over" && (
+          <h1 className="pointer" onClick={() => navigate("/")}>{`${
+            isWin ? "You won" : "You lost"
+          }. Exit to menu`}</h1>
+        )}
+        {gamePhase === "battle" && (
+          <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
+        )}
+        <div className="game">
           <div className="field-container">
-            <h3>{`Enemy field. Deployed: ${enemyField.deployedShips}`}</h3>
-            <Field
-              field={enemyField.field}
-              handleCellClick={
-                isMyMove && gamePhase === "battle" ? shoot : () => {}
-              }
-            />
+            <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
+            <Field field={field.field} handleCellClick={deploySelectedShip} />
+            {selectedShip ? (
+              <PreviewDeploy gameField={selectedShip.gameField} />
+            ) : (
+              <></>
+            )}
           </div>
+          {shipsToDeploy.length === 0 && (
+            <div className="field-container">
+              <h3>{`Enemy field. Deployed: ${enemyField.deployedShips}`}</h3>
+              <Field
+                field={enemyField.field}
+                handleCellClick={
+                  isMyMove && gamePhase === "battle" ? shoot : () => {}
+                }
+              />
+            </div>
+          )}
+        </div>
+        {gamePhase === "deployment" && (
+          <SelectShip
+            setSelectedShip={setSelectedShip}
+            shipsToDeploy={shipsToDeploy}
+            setShipsToDeploy={setShipsToDeploy}
+          />
         )}
       </div>
-      {gamePhase === "deployment" && (
-        <SelectShip
-          setSelectedShip={setSelectedShip}
-          shipsToDeploy={shipsToDeploy}
-          setShipsToDeploy={setShipsToDeploy}
-        />
-      )}
-    </div>
+    </GameContextProvider>
   );
 };
 
