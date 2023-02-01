@@ -12,6 +12,7 @@
   flex-direction: row;
   max-width: 80%;
   overflow-x: scroll;
+  margin-top: 1.5rem;
 }
 /* 
 .select-cont  >:hover {
@@ -24,7 +25,7 @@
   padding: 5px;
   border: solid 1px gray;
   border-radius: 3px;
-  margin: 1px;
+  margin: 5px;
 }
 
 .select-cont-selected {
@@ -41,5 +42,4 @@
 .field {
   display: flex;
   flex-direction: column;
-  margin: 1rem;
 }
