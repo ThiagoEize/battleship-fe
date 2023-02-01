@@ -3,16 +3,14 @@ import NavBar from "./components/navBar/NavBar";
 // import PetList from "./components/PetList";
 import Profile from "./components/profile/Profile";
 import Game from "./components/game/Game";
+import GamePvP from "./components/game/GamePvP";
 import Home from "./components/home/Home";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 // import Axios from "axios";
-import {
-  Route,
-  Routes
-} from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import GlobalContextProvider from "./contexts/GlobalContext";
 
-import './index.css';
+import "./index.css";
 
 function App() {
   return (
@@ -28,18 +26,9 @@ function App() {
               // </PrivateRoute>
             }
           ></Route>
-          <Route
-            path="/profile"
-            element={
-              <Profile />
-            }
-          ></Route>
-          <Route
-            path="/game"
-            element={
-              <Game />
-            }
-          ></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/game" element={<Game />}></Route>
+          <Route path="/gamePvP" element={<GamePvP />}></Route>
         </Routes>
       </div>
     </GlobalContextProvider>

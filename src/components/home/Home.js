@@ -31,7 +31,7 @@ export default function Home() {
         setUserId
     } = useGlobalContext();
 
-    const handleZoom = () => {
+    const handleZoomGame = () => {
         setZoom(true);
         // setButtonClicked("play")
         setTimeout(() => {
@@ -41,6 +41,18 @@ export default function Home() {
             <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
         );
     };
+
+    const handleZoomGamePvp = () => {
+        setZoom(true);
+        setButtonClicked("play")
+        setTimeout(() => {
+            navigate("/gamePvP");
+        }, 500);
+        return (
+            <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
+        );
+    };
+
     const handleLogin = () => {
         return (
             <>
@@ -106,12 +118,19 @@ export default function Home() {
                             buttonClicked !== "logout" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
+<<<<<<< HEAD
                                 token ?
                                     <button onClick={handleZoom}>PLAY</button>
                                     :
                                     <div>
                                         <button onClick={() => setButtonClicked("login")}>LOGIN</button>
                                     </div>
+=======
+                                <div>
+                                    <button onClick={handleZoomGame} className="button-play">PLAY</button>
+                                    <button onClick={handleZoomGamePvp} className="button-play-pvp">PLAY PVP</button>
+                                </div>
+>>>>>>> wol
                             )}
                         {!zoom &&
                             buttonClicked !== "login" &&

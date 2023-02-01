@@ -137,7 +137,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     font-family: "Orbitron", sans-serif;
-    font-size: 1.3em;
+    font-size: 12px;
     color: #fff;
     background: #F06449;
     border: 5px solid #4c4c4c;
@@ -153,6 +153,15 @@ body {
     background: #f06549b7;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
     transform: translate(-50%, -50%) scale(0.95);
+}
+
+.button-play {
+    top: 60% !important;
+}
+
+.button-play-pvp {
+    top: 85% !important;
+    white-space: nowrap;
 }
 
 .arcade-machine .screen-container .joystick {
@@ -283,7 +292,7 @@ body {
 
 .ship-container {
     position: absolute;
-    top: 20%;
+    top: 15%;
     left: 35%;
     height: 30%;
     width: 30%;

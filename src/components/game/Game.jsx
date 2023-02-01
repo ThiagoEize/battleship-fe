@@ -4,8 +4,11 @@ import GameField from "./lib/gameField";
 import Field from "./Field";
 import "./style/game.css";
 import SelectShip from "./SelectShip";
+import PreviewDeploy from "./previewDeploy";
 import initShips from "./lib/initShips";
 import AiGameField from "./lib/aiGameField";
+import { useNavigate } from "react-router-dom";
+import { GameContextProvider } from "../../contexts/GameContext";
 
 const Game = () => {
   const [aiField, setAiField] = useState(new AiGameField(10, 10, initShips));
@@ -16,12 +19,18 @@ const Game = () => {
   );
   const [selectedShip, setSelectedShip] = useState();
   const [shipsToDeploy, setShipsToDeploy] = useState(initShips);
+  const [message, setMessage] = useState('')
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (shipsToDeploy.length > 0) return;
     if (field.deployedShips === 0) setIsWin(false);
     if (aiField.deployedShips === 0) setIsWin(true);
   }, [field, aiField]);
+
+  useEffect(()=> {
+    setMessage("")
+  }, [selectedShip])
 
   const deploySelectedShip = (coords) => {
     if (!selectedShip) return;
@@ -34,12 +43,12 @@ const Game = () => {
         );
         setSelectedShip(null);
       }
+      setMessage("ship out of bounds")
       return newGameField;
     });
   };
 
   const shoot = (coords) => {
-    console.log("isWin", isWin);
     if (enemyField.getState(coords) !== "unknown") return;
     if (isWin !== undefined) return;
     setAiField(aiField.shoot(coords));
@@ -58,16 +67,29 @@ const Game = () => {
   };
 
   return (
-    <>
-      {isWin !== undefined && <h1>{`${isWin ? "You won" : "You lost"}`}</h1>}
-      <div className="flex">
-        <div>
-          <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
-          <Field field={field.field} handleCellClick={deploySelectedShip} />
+    <GameContextProvider>
+    <div className="game-container">
+      {isWin !== undefined && (
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${
+          isWin ? "You won" : "You lost"
+        }. Exit to menu`}</h1>
+      )}
+      {isWin === undefined && (
+        <h1>{`${
+          shipsToDeploy.length > 0 ? "Deploy your ships" : "Destroy your enemy"
+        } `}</h1>
+      )}
+
+      <div className="game">
+        <div className="field-container">
+          <h2>{`My field. Deployed: ${field.deployedShips}`}</h2>
+          <Field field={field.field} handleCellClick={deploySelectedShip} id="main" message={message} />
+          {selectedShip ? <PreviewDeploy gameField={selectedShip.gameField}/>: <></>}
+
         </div>
         {shipsToDeploy.length === 0 && (
-          <div>
-            <h3>{`Enemy field. Deployed: ${aiField.deployedShips}`}</h3>
+          <div className="field-container">
+            <h2>{`Enemy field. Deployed: ${aiField.deployedShips}`}</h2>
             <Field field={enemyField.field} handleCellClick={shoot} />
           </div>
         )}
@@ -79,7 +101,8 @@ const Game = () => {
           setShipsToDeploy={setShipsToDeploy}
         />
       )}
-    </>
+    </div>
+    </GameContextProvider>
   );
 };
 

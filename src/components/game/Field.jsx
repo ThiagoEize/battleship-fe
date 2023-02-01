@@ -1,8 +1,9 @@
 import Row from "./Row";
 
-const Field = ({ field, handleCellClick }) => {
+const Field = ({ field, handleCellClick, id, message }) => {
     return (
-        <div className="field">
+        <>
+        <div id={id} className="field">
             {field.map((v, i) => (
                 <Row
                     key={i}
@@ -13,6 +14,10 @@ const Field = ({ field, handleCellClick }) => {
                 />
             ))}
         </div>
+        <div className="message">
+            {message}
+        </div>
+        </>
     );
 };
 
