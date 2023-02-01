@@ -571,3 +571,28 @@ body {
     }
 
 }
+
+.logout-confirmation {
+    height: 15%;
+    width: 70%;
+    position: absolute;
+    top: 18%;
+    left: 15%;
+    z-index: 3;
+    font-size: 17px;
+    color: rgb(250, 20, 20);
+    font-family: "Orbitron", sans-serif; 
+    text-transform: uppercase;
+    background: #EDE6E3;
+    border: 5px solid #4c4c4c;
+}
+
+.button-yes {
+    left: 35% !important;
+    font-size: 1em;
+}
+
+.button-no {
+    left: 65% !important;
+    font-size: 1em;
+}

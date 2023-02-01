@@ -107,9 +107,8 @@ const Game = () => {
       )}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
-        <h1 className="pointer" onClick={() => navigate("/")}>{`${
-          isWin ? "You won" : "You lost"
-        }. Exit to menu`}</h1>
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${isWin ? "You won" : "You lost"
+          }. Exit to menu`}</h1>
       )}
       {gamePhase === "battle" && (
         <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
@@ -117,6 +116,7 @@ const Game = () => {
       <div className="game">
         <div className="field-container">
           <h3>
+            <span>`My field. Deployed: </span>
             <span>My field. Deployed :</span>
             <span class="number">{field.deployedShips} </span>
           </h3>
@@ -131,7 +131,7 @@ const Game = () => {
             <Field
               field={enemyField.field}
               handleCellClick={
-                isMyMove && gamePhase === "battle" ? shoot : () => {}
+                isMyMove && gamePhase === "battle" ? shoot : () => { }
               }
             />
           </div>
