@@ -11,7 +11,9 @@ import { useNavigate } from "react-router-dom";
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
 
-const socket = io("http://localhost:3002");
+const socket = io(
+  `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_WS_PORT}`
+);
 
 const Game = () => {
   const navigate = useNavigate();
