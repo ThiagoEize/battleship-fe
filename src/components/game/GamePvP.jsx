@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { cloneDeep } from "lodash";
 import GameField from "./lib/gameField";
 import Field from "./Field";
@@ -7,6 +7,8 @@ import SelectShip from "./SelectShip";
 import initShips from "./lib/initShips";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import sendScore from "./lib/sendScore";
 
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
@@ -16,6 +18,8 @@ const socket = io(
 );
 
 const Game = () => {
+  const { userId } = useContext(GlobalContext);
+
   const navigate = useNavigate();
   const [gamePhase, setGamePhase] = useState("wait-player");
   const [isMyMove, setIsMyMove] = useState();
@@ -52,6 +56,7 @@ const Game = () => {
     socket.on("game-over", (isWin) => {
       setGamePhase("game-over");
       setIsWin(isWin);
+      sendScore(field.deployedShips - enemyField.deployedShips, userId);
     });
   }, []);
 
