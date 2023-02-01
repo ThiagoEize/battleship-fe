@@ -18,6 +18,9 @@ const Game = () => {
   );
   const [selectedShip, setSelectedShip] = useState();
   const [shipsToDeploy, setShipsToDeploy] = useState(initShips);
+  const [playDeploymentSound, setPlayDeploymentSound] = useState(false);
+  const [playShotMissSound, setPlayShotMissSound] = useState(false);
+  const [playShotHitSound, setPlayShotHitSound] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,11 +36,15 @@ const Game = () => {
       const newGameField = cloneDeep(prev);
       const isAdded = newGameField.addShip(selectedShip, coords);
       if (isAdded) {
+        setPlayDeploymentSound(true);
         setShipsToDeploy((prev) =>
           prev.filter((x) => x.id !== selectedShip.id)
         );
         setSelectedShip(null);
       }
+      setTimeout(() => {
+        setPlayDeploymentSound(false);
+      }, 500);
       return newGameField;
     });
   };
@@ -53,15 +60,43 @@ const Game = () => {
         aiField.getShipId(coords)
       )
     );
-    if (enemyField.getState(coords) === "d-ship")
+    if (enemyField.getState(coords) === "d-ship") {
+      setPlayShotHitSound(true);
+      setTimeout(() => {
+        setPlayShotHitSound(false);
+      }, 500);
       setEnemyField(enemyField.shotShip(coords));
-    setField((prev) => {
-      return aiField.aiShot(prev);
-    });
+      setField((prev) => {
+        return aiField.aiShot(prev);
+      });
+    } else {
+      setPlayShotMissSound(true);
+      setTimeout(() => {
+        setPlayShotMissSound(false);
+      }, 500);
+    }
   };
 
   return (
     <div className="game-container">
+      {playShotHitSound && (
+        <AudioPlayer
+          src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3"
+          autoPlay
+        />
+      )}
+      {playShotMissSound && (
+        <AudioPlayer
+          src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_d5ed57b584.mp3?filename=error-sound-39539.mp3"
+          autoPlay
+        />
+      )}
+      {playDeploymentSound && (
+        <AudioPlayer
+          src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_a5fa3caf34.mp3?filename=good-6081.mp3"
+          autoPlay
+        />
+      )}
       {
         <AudioPlayer
           src="https://cdn.pixabay.com/download/audio/2022/05/24/audio_7ba9344ade.mp3?filename=epic-piano-111910.mp3"
