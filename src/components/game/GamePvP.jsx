@@ -99,8 +99,12 @@ const Game = () => {
           loop
         />
       }
-      {gamePhase === "wait-player" && <h1 className="centeredText">Waiting for another player...</h1>}
-      {gamePhase === "deployment" && <h1 >Deploy your ships</h1>}
+      {gamePhase === "wait-player" && (
+        <h1 className="centeredText">Waiting for another player...</h1>
+      )}
+      {gamePhase === "deployment" && (
+        <h1 className="centeredText">Deploy your ships</h1>
+      )}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
         <h1 className="pointer" onClick={() => navigate("/")}>{`${
@@ -113,14 +117,17 @@ const Game = () => {
       <div className="game">
         <div className="field-container">
           <h3>
-            <span>`My field. Deployed: </span>  
+            <span>My field. Deployed :</span>
             <span class="number">{field.deployedShips} </span>
           </h3>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (
           <div className="field-container">
-            <h3>{`Enemy field. Deployed: ${enemyField.deployedShips}`}</h3>
+            <h3>
+              <span>Enemy field. Deployed :</span>
+              <span class="number">{enemyField.deployedShips} </span>
+            </h3>
             <Field
               field={enemyField.field}
               handleCellClick={
