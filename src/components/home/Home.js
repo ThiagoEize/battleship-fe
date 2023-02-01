@@ -34,7 +34,7 @@ export default function Home() {
 
     const handleZoomGame = () => {
         setZoom(true);
-        // setButtonClicked("play")
+        setButtonClicked("play")
         setTimeout(() => {
             navigate("/game");
         }, 700);
