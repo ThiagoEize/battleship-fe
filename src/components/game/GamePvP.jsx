@@ -15,7 +15,7 @@ const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
 
 const socket = io(
-  `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_WS_PORT}`
+  `${process.env.REACT_APP_WS_URL}:${process.env.REACT_APP_WS_PORT}`
 );
 
 const Game = () => {
@@ -99,12 +99,15 @@ const Game = () => {
           loop
         />
       }
-      {gamePhase === "wait-player" && <h1 className="centeredText">Waiting for another player...</h1>}
-      {gamePhase === "deployment" && <h1 >Deploy your ships</h1>}
+      {gamePhase === "wait-player" && (
+        <h1 className="centeredText">Waiting for another player...</h1>
+      )}
+      {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
-        <h1 className="pointer" onClick={() => navigate("/")}>{`${isWin ? "You won" : "You lost"
-          }. Exit to menu`}</h1>
+        <h1 className="pointer" onClick={() => navigate("/")}>{`${
+          isWin ? "You won" : "You lost"
+        }. Exit to menu`}</h1>
       )}
       {gamePhase === "battle" && (
         <h1>{`${isMyMove ? "Your move" : "Enemy move"}`}</h1>
@@ -123,7 +126,7 @@ const Game = () => {
             <Field
               field={enemyField.field}
               handleCellClick={
-                isMyMove && gamePhase === "battle" ? shoot : () => { }
+                isMyMove && gamePhase === "battle" ? shoot : () => {}
               }
             />
           </div>
