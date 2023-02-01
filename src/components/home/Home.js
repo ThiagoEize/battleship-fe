@@ -118,19 +118,10 @@ export default function Home() {
                             buttonClicked !== "logout" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
-<<<<<<< HEAD
-                                token ?
-                                    <button onClick={handleZoom}>PLAY</button>
-                                    :
-                                    <div>
-                                        <button onClick={() => setButtonClicked("login")}>LOGIN</button>
-                                    </div>
-=======
                                 <div>
                                     <button onClick={handleZoomGame} className="button-play">PLAY</button>
                                     <button onClick={handleZoomGamePvp} className="button-play-pvp">PLAY PVP</button>
                                 </div>
->>>>>>> wol
                             )}
                         {!zoom &&
                             buttonClicked !== "login" &&
