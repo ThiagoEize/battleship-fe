@@ -61,20 +61,20 @@ const Game = () => {
       )
     );
     if (enemyField.getState(coords) === "d-ship") {
+      setEnemyField(enemyField.shotShip(coords));
       setPlayShotHitSound(true);
       setTimeout(() => {
         setPlayShotHitSound(false);
       }, 500);
-      setEnemyField(enemyField.shotShip(coords));
-      setField((prev) => {
-        return aiField.aiShot(prev);
-      });
     } else {
       setPlayShotMissSound(true);
       setTimeout(() => {
         setPlayShotMissSound(false);
       }, 500);
     }
+    setField((prev) => {
+      return aiField.aiShot(prev);
+    });
   };
 
   return (
