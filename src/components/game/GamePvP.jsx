@@ -9,6 +9,7 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import sendScore from "./lib/sendScore";
+import AudioPlayer from "react-audio-player";
 
 const initEnemyField = new GameField(10, 10, "unknown");
 initEnemyField.deployedShips = initShips.length;
@@ -91,8 +92,15 @@ const Game = () => {
 
   return (
     <div className="game-container">
-      {gamePhase === "wait-player" && <h1>Waiting for another player</h1>}
-      {gamePhase === "deployment" && <h1>Deploy your ships</h1>}
+      {
+        <AudioPlayer
+          src="https://cdn.pixabay.com/download/audio/2021/11/24/audio_838dbb98e5.mp3?filename=inspiring-epic-motivation-cinematic-trailer-11218.mp3"
+          autoPlay
+          loop
+        />
+      }
+      {gamePhase === "wait-player" && <h1 className="centeredText">Waiting for another player...</h1>}
+      {gamePhase === "deployment" && <h1 >Deploy your ships</h1>}
       {gamePhase === "battle" && <h1>Destroy your enemy</h1>}
       {gamePhase === "game-over" && (
         <h1 className="pointer" onClick={() => navigate("/")}>{`${
@@ -104,7 +112,10 @@ const Game = () => {
       )}
       <div className="game">
         <div className="field-container">
-          <h3>{`My field. Deployed: ${field.deployedShips}`}</h3>
+          <h3>
+            <span>`My field. Deployed: </span>  
+            <span class="number">{field.deployedShips} </span>
+          </h3>
           <Field field={field.field} handleCellClick={deploySelectedShip} />
         </div>
         {shipsToDeploy.length === 0 && (

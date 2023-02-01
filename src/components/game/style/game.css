@@ -7,20 +7,22 @@
   height: 100vh;
   font-family: "Retro Gaming";
 }
+
+.game-container,
+h2 {
+  margin-left: 10px;
+}
+
 @font-face {
   font-family: "Retro Gaming";
   src: url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.eot");
-  src: url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.eot?#iefix")
-      format("embedded-opentype"),
-    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.woff2")
-      format("woff2"),
-    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.woff")
-      format("woff"),
-    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.ttf")
-      format("truetype"),
-    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.svg#Retro Gaming")
-      format("svg");
+  src: url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.eot?#iefix") format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.woff2") format("woff2"),
+    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.woff") format("woff"),
+    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/4c19fc875e7ba1e6831129de3ab5ac0b.svg#Retro Gaming") format("svg");
 }
+
 .select-cont {
   display: flex;
   flex-direction: row;
@@ -28,6 +30,7 @@
   overflow-x: scroll;
   margin-top: 1.5rem;
 }
+
 /* 
 .select-cont  >:hover {
     cursor: pointer;
@@ -56,12 +59,30 @@
 .field {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .field-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-left: 60px;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.centeredText {
+  margin-left: 60px;
+}
+
+.number {
+  margin-left: 10px;
+  color: #EC9908;
+}
+
+.text {
+  font-size: 1.5rem;
 }

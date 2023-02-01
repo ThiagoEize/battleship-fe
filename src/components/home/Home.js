@@ -15,6 +15,7 @@ import AudioPlayer from "react-audio-player";
 import Game from "../game/Game";
 
 import "./Home.css";
+import { Button } from "react-bootstrap";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -36,21 +37,15 @@ export default function Home() {
         setButtonClicked("play")
         setTimeout(() => {
             navigate("/game");
-        }, 500);
-        return (
-            <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
-        );
+        }, 700);
     };
 
     const handleZoomGamePvp = () => {
         setZoom(true);
-        setButtonClicked("play")
+        setButtonClicked("playpvp")
         setTimeout(() => {
             navigate("/gamePvP");
-        }, 500);
-        return (
-            <AudioPlayer src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_dea21d9092.mp3?filename=game-start-6104.mp3" controls autoPlay />
-        );
+        }, 700);
     };
 
     const handleLogin = () => {
@@ -81,6 +76,9 @@ export default function Home() {
 
     return (
         <div className="container">
+            {<AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/02/07/audio_f11b3b3cc6.mp3?filename=cottagecore-17463.mp3" autoPlay loop />}
+            {buttonClicked === "play" && <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3?filename=correct-2-46134.mp3" autoPlay />}
+            {buttonClicked === "playpvp" && <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_ee9ac692c2.mp3?filename=scale-e6-14577.mp3" autoPlay />}
             <div className={`arcade-machine ${zoom ? "zoom" : ""}`}>
                 <div className="shadow"></div>
                 <div className="top">
@@ -100,6 +98,7 @@ export default function Home() {
                                 <div>
                                     <button onClick={handleZoomGame} className="button-play">PLAY</button>
                                     <button onClick={handleZoomGamePvp} className="button-play-pvp">PLAY PVP</button>
+
                                 </div>
                             )}
                         {!zoom &&
