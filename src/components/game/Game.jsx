@@ -4,9 +4,11 @@ import GameField from "./lib/gameField";
 import Field from "./Field";
 import "./style/game.css";
 import SelectShip from "./SelectShip";
+import PreviewDeploy from "./previewDeploy";
 import initShips from "./lib/initShips";
 import AiGameField from "./lib/aiGameField";
 import { useNavigate } from "react-router-dom";
+import { GameContextProvider } from "../../contexts/GameContext";
 
 const Game = () => {
   const [aiField, setAiField] = useState(new AiGameField(10, 10, initShips));
@@ -17,7 +19,7 @@ const Game = () => {
   );
   const [selectedShip, setSelectedShip] = useState();
   const [shipsToDeploy, setShipsToDeploy] = useState(initShips);
-
+  const [message, setMessage] = useState('')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,6 +27,10 @@ const Game = () => {
     if (field.deployedShips === 0) setIsWin(false);
     if (aiField.deployedShips === 0) setIsWin(true);
   }, [field, aiField]);
+
+  useEffect(()=> {
+    setMessage("")
+  }, [selectedShip])
 
   const deploySelectedShip = (coords) => {
     if (!selectedShip) return;
@@ -37,6 +43,7 @@ const Game = () => {
         );
         setSelectedShip(null);
       }
+      setMessage("ship out of bounds")
       return newGameField;
     });
   };
@@ -60,6 +67,7 @@ const Game = () => {
   };
 
   return (
+    <GameContextProvider>
     <div className="game-container">
       {isWin !== undefined && (
         <h1 className="pointer" onClick={() => navigate("/")}>{`${
@@ -75,7 +83,9 @@ const Game = () => {
       <div className="game">
         <div className="field-container">
           <h2>{`My field. Deployed: ${field.deployedShips}`}</h2>
-          <Field field={field.field} handleCellClick={deploySelectedShip} />
+          <Field field={field.field} handleCellClick={deploySelectedShip} id="main" message={message} />
+          {selectedShip ? <PreviewDeploy gameField={selectedShip.gameField}/>: <></>}
+
         </div>
         {shipsToDeploy.length === 0 && (
           <div className="field-container">
@@ -92,6 +102,7 @@ const Game = () => {
         />
       )}
     </div>
+    </GameContextProvider>
   );
 };
 

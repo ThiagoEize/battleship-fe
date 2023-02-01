@@ -55,3 +55,13 @@
   filter: invert(24%) sepia(63%) saturate(2716%) hue-rotate(95deg)
     brightness(103%) contrast(108%);
 }
+
+#main .cell :hover {
+  background-color: #008000;
+}
+
+.preview {
+  position: absolute;
+  z-index: -1; 
+  /* VERY IMPORTANT THAT Z-INDEX BE SMALLER THAN FIELD Z-INDEX */
+}
