@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Alert from 'react-bootstrap/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faUnlockAlt, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,7 @@ import { useGlobalContext } from "../../contexts/GlobalContext";
 
 import './Form.css';
 
-const LogInForm = ({setButtonClicked}) => {
+const LogInForm = ({ setButtonClicked }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -15,6 +15,10 @@ const LogInForm = ({setButtonClicked}) => {
     };
 
     const { errorsFromServer, setErrorsFromServer, setUserId, setToken } = useGlobalContext();
+
+    useEffect(() => {
+        setErrorsFromServer(false)
+    }, [])
 
     const handleLogIn = async (e) => {
         e.preventDefault();
@@ -34,7 +38,7 @@ const LogInForm = ({setButtonClicked}) => {
         } catch (err) {
             console.log('This is the error message', err);
             if (err.response.data) {
-                setErrorsFromServer(err.response.data)
+                setErrorsFromServer('Username or password incorrect')
             }
         }
     };
@@ -74,6 +78,7 @@ const LogInForm = ({setButtonClicked}) => {
                         onChange={handleChange}
                     >
                     </input>
+
                     <span className='eye-icon' onClick={togglePasswordVisibility}>
                         <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                     </span>
@@ -81,11 +86,16 @@ const LogInForm = ({setButtonClicked}) => {
                         <FontAwesomeIcon icon={faUnlockAlt} />
                     </span>
                 </div>
-                <button className="form-btn-login" onClick={handleLogIn}>
-                    Log In
-                </button>
+                <div>
+                    <button className="form-btn-login" onClick={handleLogIn}>
+                        Log In
+                    </button>
+                    <button className="form-btn-signup-login" onClick={() => setButtonClicked('signup')}>
+                        Signup
+                    </button>
+                </div>
                 {errorsFromServer &&
-                    <Alert variant="danger">
+                    <Alert className="form-alert">
                         {errorsFromServer}
                     </Alert>
                 }

@@ -13,7 +13,10 @@
     width: 50%;
 }
 
-.form-email:focus, .form-password:focus, .form-firstName:focus, .form-lastName:focus {
+.form-email:focus,
+.form-password:focus,
+.form-firstName:focus,
+.form-lastName:focus {
     border: 2px solid #f06549d0;
     outline: none;
 }
@@ -34,6 +37,26 @@
     border: 2px solid #4c4c4c !important;
     box-shadow: none !important;
     cursor: pointer;
+}
+
+.form-btn-signup-login {
+    top: 78% !important;
+    font-family: "Orbitron", sans-serif !important;
+    font-size: 0.3em !important;
+    border: 2px solid #4c4c4c !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.form-alert {
+    top: 90% !important;
+    position: relative;
+    font-family: "Orbitron", sans-serif !important;
+    font-size: 0.3em !important;
+    border: 2px solid #4c4c4c !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    color: red
 }
 
 .icon {

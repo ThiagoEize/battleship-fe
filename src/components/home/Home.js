@@ -33,7 +33,7 @@ export default function Home() {
 
     const handleZoom = () => {
         setZoom(true);
-        setButtonClicked("play")
+        // setButtonClicked("play")
         setTimeout(() => {
             navigate("/game");
         }, 500);
@@ -45,6 +45,25 @@ export default function Home() {
         return (
             <>
                 <LogInForm setButtonClicked={setButtonClicked} />
+                <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/09/29/audio_a4b3f2fe44.mp3?filename=select-sound-121244.mp3" autoPlay />
+            </>
+        );
+    };
+    const handleLogout = () => {
+        console.log('logout');
+        return (
+            <>
+                <h1 className="logout-confirmation">Logout</h1>
+                <button className="button-yes" onClick={() => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userId');
+                    setToken(false)
+                    setUserId(false)
+                    setButtonClicked(false)
+                }}>Yes</button>
+                <button className="button-no" onClick={() => {
+                    setButtonClicked(false)
+                }}>No</button>
                 <AudioPlayer src="https://cdn.pixabay.com/download/audio/2022/09/29/audio_a4b3f2fe44.mp3?filename=select-sound-121244.mp3" autoPlay />
             </>
         );
@@ -79,16 +98,24 @@ export default function Home() {
                     <div className="screen">
                         <div className="screen-display"></div>
                         {buttonClicked === "login" && handleLogin()}
+                        {buttonClicked === "logout" && handleLogout()}
                         {buttonClicked === "signup" && handleSignUp()}
                         {buttonClicked === "info" && handleInfo()}
                         {!zoom &&
                             buttonClicked !== "login" &&
+                            buttonClicked !== "logout" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
-                                <button onClick={handleZoom}>PLAY</button>
+                                token ?
+                                    <button onClick={handleZoom}>PLAY</button>
+                                    :
+                                    <div>
+                                        <button onClick={() => setButtonClicked("login")}>LOGIN</button>
+                                    </div>
                             )}
                         {!zoom &&
                             buttonClicked !== "login" &&
+                            buttonClicked !== "logout" &&
                             buttonClicked !== "signup" &&
                             buttonClicked !== "info" && (
                                 <div className="ship-container">
@@ -115,20 +142,33 @@ export default function Home() {
                         <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="icon-login"
-                            title="Login"
+                            title="Sign up"
                         />
                     </button>
                     <button
                         className="button button-b"
                         onClick={() => {
-                            setButtonClicked("login");
+                            {
+                                !token ?
+                                    setButtonClicked("login")
+                                    :
+                                    setButtonClicked("logout")
+                            }
                         }}
                     >
-                        <FontAwesomeIcon
-                            icon={faUser}
-                            className="icon-signup"
-                            title="Sign Up"
-                        />
+                        {token ?
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                className="icon-signup"
+                                title="Log out"
+                            />
+                            :
+                            <FontAwesomeIcon
+                                icon={faUser}
+                                className="icon-signup"
+                                title="Log in"
+                            />
+                        }
                     </button>
                     <button
                         className="button button-c"
