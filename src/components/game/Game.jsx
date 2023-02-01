@@ -106,7 +106,7 @@ const Game = () => {
       }
       {isWin === true && (
         <AudioPlayer
-          src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3"
+          src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3?filename=success-fanfare-trumpets-6185.mp3"
           autoPlay
         />
       )}
